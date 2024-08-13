@@ -1,0 +1,7 @@
+.warning-message {
+    color: red; /* or any color you prefer */
+    font-size: 16px; /* or any size you prefer */
+    padding: 10px; /* or any padding you prefer */
+    border: 1px solid red; /* or any border style you prefer */
+    background-color: #ffcccc; /* optional background color */
+}

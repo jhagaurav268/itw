@@ -1,0 +1,37 @@
+<apex:page standardController="Lead" showHeader="false" docType="html-4.01-strict">
+<script>
+$(document).ready(function() {
+      crmc.require(["GridBase"], function(gridFactory) {
+             Object.each(gridFactory.instances, function(grid) {
+                     if (grid.settings.pageInfo.objectName == "<filteredObject>"){
+                         var filterFn = function(ds) {
+                               ds.filter({
+                                    "logic": "and",
+                                    "filters": [{
+                                        "logic": "and",
+                                        "filters": [
+                                         {
+                                        "field": "Email",
+                                        "operator":"includes",
+                                         "value": "{!Lead.Email}"
+                                         }]
+                                    }]
+                               });
+                           };
+                           var orig = grid.initDataSource;
+                           grid.initDataSource = function(queryCallback, restoreColumns) {
+                                 orig.apply(grid, [filterFn, restoreColumns]);
+                           };
+                           grid.refresh();
+                        }
+                 });
+         });
+});
+</script>
+<br></br>
+This page matches contacts in the CONTACTS object by the LEAD.EMAIL address 
+<CRMC_PP:Grid ObjectName="Contact" FKName="" FKValue="" DelayLoad="false"  ViewID="a06o000000LFtBJAA1" 
+ EnableNewButton="true"  EnableNewInline="true"  EnableEdit="true"  EnableActions="true"  EnableFieldChooser="true" 
+ EnableStickyViews="false"  EnableToolbar="true"  EnableViews="true"  EnableFormatting="true"  EnableReadingPane="true" />
+<CRMC_PP:DrillUp />
+</apex:page>

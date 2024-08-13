@@ -1,0 +1,18 @@
+.map-container {
+    height: 400px;
+    width: 100%;
+}
+
+.boxStyle{
+    border: 1px solid rgb(147, 145, 145);
+    padding: 0.5% 1% 4% 1%;
+}
+
+.boxStyleButton{
+    border: 1px solid rgb(147, 145, 145);
+    padding: 1% 1% 1% 1%;
+}
+
+.boxStyleTable{
+    border: 1px solid rgb(147, 145, 145);
+}

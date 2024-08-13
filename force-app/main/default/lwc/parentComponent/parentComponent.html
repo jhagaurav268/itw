@@ -1,0 +1,29 @@
+<template>
+    <lightning-card>
+        <template if:true={warningMessage}>
+        <div class="warning-message">
+            {warningMessage}
+        </div>
+    </template>
+   
+        <template if:true={allScreenData.isScreenOne}>
+            <c-search-account-from-pincode pincode-value={pinCodeFromParent} main-data={mainData}
+                onsenddata={handleDataFromParent} previous-click={isPreviousClick}></c-search-account-from-pincode>
+        </template>
+        <template if:true={allScreenData.isScreenTwo}>
+            <c-contacts-relatedto-account account-data={allScreenData} onsecondscreendata={handleDataFromSecondScreen}
+                store-selected-data={allScreenData.ScreenTwoData}></c-contacts-relatedto-account>
+        </template>
+        <template if:true={allScreenData.isScreenThree}>
+            <c-send-email-to-contacts store-third-screen-data={allScreenData.ScreenTwoData}
+                onsendtemplate={handleTemplateData} ondisablesend={handledisablesend}
+                store-template-data={allScreenData.ScreenThreeData}></c-send-email-to-contacts>
+        </template>
+        <div class="slds-m-around_medium">
+            <lightning-button label="Previous" variant="Brand" disabled={allScreenData.previousDisabled}
+                onclick={handlePreviousClick}></lightning-button>
+            <lightning-button label={allScreenData.nextButtonLabel} disabled={isNextDisable} variant="Brand"
+                class="slds-float_right" onclick={handleNextClick}></lightning-button>
+        </div>
+    </lightning-card>
+</template>

@@ -1,0 +1,176 @@
+.headerStyle{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.contentStyle{
+    font-size: 15px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+:host {
+    --slds-c-textarea-sizing-min-height: 200px;
+}
+
+.file-list-container {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.tile{
+    border: 1px, solid, black;
+    border-radius: 10px;
+    margin-right: 10px;
+    margin-bottom: 5px;
+}
+
+/* .slds-form-element {
+    margin-bottom: 20px; // Adjust margin as needed 
+}
+
+.slds-file-selector__input {
+    opacity: 0; // Hide the default input appearance 
+    width: 0.1px;
+    height: 0.1px;
+    position: absolute;
+}
+
+// Style the label to resemble a button 
+.slds-form-element__label {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background-color: #0070d2;
+    color: #ffffff;
+    border-radius: 0.25rem;
+    cursor: pointer;
+}
+
+.slds-form-element__label:hover {
+    background-color: #005fb2; // Darker shade when hovered 
+}
+
+// Style the label with icon 
+.file-upload-label {
+    display: inline-flex;
+    align-items: center;
+} */
+
+.slds-form-element {
+    margin-bottom: 20px; /* Adjust margin as needed */
+}
+
+.slds-file-selector__input {
+    opacity: 0; /* Hide the default input appearance */
+    width: 0.1px;
+    height: 0.1px;
+    position: absolute;
+}
+
+/* Style the label to resemble a button with custom colors and small size */
+.slds-form-element__label {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.5rem; /* Smaller padding for small size */
+    background-color: #f4f4f4; /* Custom background color */
+    color: #000000; /* Text color set to black */
+    border-radius: 0.25rem;
+    cursor: pointer;
+    border: 1px solid #ccc; /* Optional: border to make it stand out */
+}
+
+.slds-form-element__label:hover {
+    background-color: #e0e0e0; /* Lighter shade when hovered */
+}
+
+/* Style the label with icon */
+.file-upload-label {
+    display: inline-flex;
+    align-items: center;
+}
+
+.warning-message {
+    color: #d9534f; /* Red color for warning messages */
+    background-color: #f2dede; /* Light red background color for better visibility */
+    padding: 0.5rem;
+    border: 1px solid #ebccd1; /* Border to highlight the warning */
+    border-radius: 0.25rem;
+    margin-top: 0.5rem;
+    font-weight: bold; /* Make the text bold for emphasis */
+}
+
+/* .slds-modal__container {
+    width: 70%;
+} */
+
+/* .slds-modal__container {
+    width: auto; /* Allows the container to adjust width based on content 
+    max-width: 50vw; /* Optional: sets a maximum width relative to viewport width 
+    padding: 1rem; /* Optional: adds some padding inside the container 
+} */
+
+.scrollable-container {
+    max-height: 400px; /* Set the height as per your requirement */
+    overflow-y: auto;
+    padding: 1rem; /* Optional: Adjust padding as needed */
+}
+
+.slds-backdrop_open {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.custom-modal-body {
+    background-color: white;
+    padding: 0 1rem; 
+}
+
+.slds-modal__body{
+    min-height: 60% !important;
+}
+
+.slds-modal__container {
+    padding: 0px !important;
+}
+
+
+
+/* .file-item {
+    display: flex;
+    align-items: center;
+    background-color: #f4f6f9; 
+    border: 1px solid #d8dde6; 
+    border-radius: 4px; 
+    margin-bottom: 5px; 
+    padding: 10px; 
+} */
+
+/* .file-checkbox {
+    margin-right: 10px; /* Reduce space between checkbox and title 
+} */
+
+/* .file-title {
+    flex-grow: 1; /* Ensure the title takes up the remaining space 
+    color: var(--lwc-color-website-text, #000); /* Custom color for title text 
+    white-space: nowrap; /* Prevent text from wrapping 
+    overflow: hidden; /* Hide overflow text 
+    text-overflow: ellipsis; /* Add ellipsis for overflow text 
+} */
+
+.file-info {
+    list-style-type: none; 
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 10px; 
+    color: #6b6b6b; 
+}
+
+.file-info li::before {
+    content: "•"; 
+    margin-right: 5px;
+    color: #6b6b6b; 
+}

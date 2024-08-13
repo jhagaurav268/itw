@@ -1,0 +1,200 @@
+<template>
+    <template if:true={isSpinnerLoading}>
+        <lightning-spinner alternative-text="Loading" size="medium" variant="base"></lightning-spinner>
+    </template>
+    <lightning-card>
+        <div class="slds-grid">
+            <div class="slds-p-around_medium slds-col slds-size_1-of-2" style="height: 87%;">
+                <lightning-datatable key-field="Id" data={recordsToDisplay} columns={contactColumns}
+                    hide-checkbox-column="true"></lightning-datatable>
+
+                <!--PAGE NAVIGATION-->
+                <div class="slds-align_absolute-center" style="margin-top: 3%;">
+                    <lightning-button disabled={bDisableFirst} icon-name="utility:jump_to_left" label="First"
+                        class="slds-p-horizontal_x-small" alternative-text="first page" onclick={firstPage}>
+                    </lightning-button>
+                    <lightning-button disabled={bDisableFirst} icon-name="utility:chevronleft" label="Previous"
+                        alternative-text="Previous" onclick={previousPage}></lightning-button>
+                    &nbsp;
+                    <span class="slds-badge">Showing {pageNumber} &nbsp;of&nbsp; {totalPages}
+                        &nbsp;&nbsp;Page(s)</span>
+                    &nbsp;
+                    <lightning-button disabled={bDisableLast} icon-name="utility:chevronright" label="Next"
+                        alternative-text="Next" onclick={nextPage} class="slds-p-horizontal_x-small"
+                        icon-position="right"></lightning-button>
+                    <lightning-button disabled={bDisableLast} icon-name="utility:jump_to_right" label="Last"
+                        alternative-text="last page" onclick={lastPage} icon-position="right"></lightning-button>
+                </div>
+                <!--TOTAL RECORDS-->
+                <div class="slds-clearfix">
+                    <div class="slds-align_absolute-center">
+                        <span class="slds-badge"> Total Records: {totalRecords}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-p-around_medium slds-col slds-size_1-of-2">
+                <template if:true={showCombobox}>
+                    <lightning-combobox class="userSelect" name="Email Templates" label="Email Templates"
+                        value={emailTemplateValue} placeholder="Select Email Template" options={emailTemplateOptions}
+                        onchange={handleComboboxTemplate} variant="label-hidden"></lightning-combobox>
+                </template>
+                <template if:true={showTemplateData}>
+                    <!-- <span class="headerStyle">Subject: </span> -->
+                    <label class="slds-var-m-top_small"><strong>Subject</strong></label>
+                    <lightning-input name="subject" class="customTemplateInput" variant="label-hidden" value={subject}
+                        onchange={handleInputChange}></lightning-input>
+                    <!-- <span class="headerStyle">Body:</span><br /> -->
+                    <label class="slds-var-m-top_small"><strong>Body</strong></label>
+                    <lightning-textarea name="body" class="customTemplateInput" variant="label-hidden" value={body}
+                        onchange={handleInputChange}></lightning-textarea>
+
+                    <div class="slds-form-element">
+                        <template if:true={warningMessage}>
+                            <div class="warning-message">
+                                {warningMessage}
+                            </div>
+                        </template>
+
+                        <lightning-button label="Attach File" title="Attach File" onclick={handleAttachFileClick}
+                            icon-name="utility:upload" variant="neutral" disabled={handleAttachDisable}>
+                        </lightning-button>
+                        <!-- </div> -->
+
+                        <!-- Popup Modal -->
+                        <template if:true={isPopupOpen}>
+                            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_small">
+                                <template if:true={isSpinnerLoading}>
+                                    <lightning-spinner alternative-text="Loading" size="medium"
+                                        variant="base"></lightning-spinner>
+                                </template>
+                                <div class="slds-modal__container">
+                                    <header class="slds-modal__header">
+                                        <button
+                                            class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                            title="Cancel" onclick={handleClose}>
+                                            <lightning-icon icon-name="utility:close" alternative-text="Cancel"
+                                                variant="inverse" size="small"></lightning-icon>
+                                            <span class="slds-assistive-text">Close</span>
+                                        </button>
+                                        <h2 class="slds-text-heading_medium">Select Files</h2>
+                                    </header>
+                                    <div class="slds-modal__body custom-modal-body">
+                                        <!-- Vertical layout with 3/12 and 9/12 sections -->
+                                        <lightning-layout vertical-align="stretch" multiple-rows>
+                                            <!-- File Uploader Section -->
+                                            <lightning-layout-item size="4"
+                                                class="slds-theme_default slds-border_right">
+                                                <lightning-input class="file-upload" type="file" label=""
+                                                    onchange={handleFileChange} multiple>
+                                                </lightning-input>
+                                                <template if:true={storeUploadedFileNames}>
+                                                    <div class="file-list-container">
+                                                        <template for:each={storeUploadedFileNames} for:item="item">
+                                                            <!-- <lightning-pill key={item} label={item} onremove={removeFile}>
+                                                        </lightning-pill> -->
+                                                            <div key={item.title}
+                                                                class="tile slds-grid slds-var-p-around_xx-small">
+                                                                <div class="slds-col slds-size_1-of-6">
+                                                                    <lightning-icon icon-name={item.icon}
+                                                                        alternative-text="Icon"
+                                                                        size="small"></lightning-icon>
+                                                                </div>
+                                                                <div
+                                                                    class="slds-col slds-size_4-of-6 slds-text-align_center">
+                                                                    {item.title}
+                                                                </div>
+                                                                <div
+                                                                    class="slds-col slds-size_1-of-6 slds-text-align_right">
+
+                                                                </div>
+                                                            </div>
+                                                        </template>
+                                                    </div>
+                                                </template>
+                                            </lightning-layout-item>
+
+                                            <!-- List of Files Section -->
+                                            <lightning-layout-item size="8">
+                                                <div class="slds-form-element slds-p-top_large slds-p-left_medium">
+
+                                                    <div
+                                                        class="slds-form-element__control slds-input-has-icon slds-input-has-icon_left">
+                                                        <lightning-icon size="x-small"
+                                                            class="slds-icon slds-input__icon slds-input__icon_right slds-icon-text-default"
+                                                            icon-name="utility:search"></lightning-icon>
+                                                        <input type="text" id="text-input-id-1"
+                                                            placeholder="search files" class="slds-input"
+                                                            oninput={handleSearchChange} />
+                                                    </div>
+                                                </div>
+                                                <template if:true={files}>
+                                                    <!-- <div class="slds-section"> -->
+                                                    <div
+                                                        class="file-list-container slds-border_top slds-m-bottom_small">
+                                                        <template for:each={files} for:item="file">
+                                                            <div key={file.id}
+                                                                class="slds-p-left_medium slds-grid slds-border_bottom">
+                                                                <lightning-input type="checkbox" checked={file.selected}
+                                                                    onchange={handleCheckboxChange} data-id={file.Id}
+                                                                    class="file-checkbox">
+                                                                </lightning-input>
+                                                                <lightning-icon if:true={file.isIconAvailable}
+                                                                    class="slds-m-right_x-small slds-p-top_xx-small"
+                                                                    icon-name={file.icon} alternative-text={file.Title}
+                                                                    title={file.Title}></lightning-icon>
+                                                                <lightning-icon if:false={file.isIconAvailable}
+                                                                    class="slds-m-right_x-small slds-p-top_xx-small"
+                                                                    icon-name="doctype:unknown"
+                                                                    alternative-text={file.Title}
+                                                                    title={file.Title}></lightning-icon>
+                                                                <div class="file-details">
+                                                                    <span class="file-title">{file.Title}</span>
+                                                                    <ul class="file-info">
+                                                                        <li>{file.date}</li>
+                                                                        <li>{file.FileExtension}</li>
+                                                                        <li>{file.ContentSizeKB}</li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </template>
+                                                    </div>
+                                                    <!-- </div> -->
+                                                </template>
+                                            </lightning-layout-item>
+                                        </lightning-layout>
+                                    </div>
+
+
+                                    <footer class="slds-modal__footer">
+                                        <p class="slds-float_left">{selectedFileCount} of 10 files selected.</p>
+                                        <lightning-button variant="neutral" label="Cancel"
+                                            onclick={handleClose}></lightning-button>
+                                        <lightning-button variant="brand" class="slds-p-left_small" label="Add"
+                                            onclick={handleSFUpload}></lightning-button>
+
+
+                                    </footer>
+                                </div>
+                            </section>
+                            <div class="slds-backdrop slds-backdrop_open"></div>
+                        </template>
+
+
+                    </div>
+
+                    <template if:true={storeAllSelectedFiles}>
+                        <template for:each={storeAllSelectedFiles} for:item="item" for:index="index">
+                            <span key={item.title} class="slds-m-around_xx-small">
+                                <lightning-pill data-id={item.title} data-index={index} label={item.title}
+                                    onremove={removeFile}>
+                                    <lightning-icon icon-name={item.icon}></lightning-icon>
+                                </lightning-pill>
+                            </span>
+                        </template>
+                    </template>
+
+                </template>
+            </div>
+        </div>
+    </lightning-card>
+</template>

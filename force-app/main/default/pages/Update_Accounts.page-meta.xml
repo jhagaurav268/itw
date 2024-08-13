@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApexPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>34.0</apiVersion>
+    <availableInTouch>true</availableInTouch>
+    <confirmationTokenRequired>false</confirmationTokenRequired>
+    <description>AG_Lead;AG_Contact;AG_Opportunity;AG_InForceEW__invoice__c;AG_InForceEW__salesorder__c</description>
+    <label>Update_Accounts</label>
+</ApexPage>
